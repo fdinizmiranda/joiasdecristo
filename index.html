@@ -225,6 +225,35 @@
   }
   .envelope.aberto .check { opacity: 1; }
 
+  .envelope {
+    height: 110px;
+    background: linear-gradient(180deg, #FFF8E7 0%, #F3E3B5 100%);
+    border: 1px solid #B8860B;
+    border-radius: 6px;
+    color: #7a4a2b;
+    box-shadow: 0 10px 22px rgba(0,0,0,.45);
+    text-shadow: none;
+  }
+  .envelope::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 56%;
+    background: linear-gradient(180deg, #FFE9A8 0%, #F2D27A 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border-bottom: 1px solid #B8860B;
+  }
+  .envelope .num {
+    position: absolute; left: 0; right: 0; bottom: 10px;
+    font-size: 24px;
+  }
+  .envelope.aberto {
+    background: linear-gradient(180deg, #8FC77A 0%, #4E8A3E 100%);
+    border-color: rgba(255,255,255,.4);
+  }
+  .envelope.aberto::before {
+    background: linear-gradient(180deg, #A8D98F 0%, #6FA85A 100%);
+  }
+
   .aviso-desafio { margin-top: 22px; font-size: 13px; opacity: .8; }
 
   /* ===== MODAL ===== */
