@@ -1,538 +1,342 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><script src="https://myhub.ia.br/canvas-vendor/tailwind.js"></script>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joias de Cristo | Desafio da Girafinha | IEADC Moradias Coqueiros 2</title>
+<title>Panorama SGSI Soow Sigma v11</title>
 <style>
-  :root {
-    --bg-1: #1a110a;
-    --bg-2: #0d0805;
-    --ouro: #F2B705;
-    --ouro-claro: #FFD966;
-    --ouro-escuro: #B8860B;
-    --marrom: #7a4a2b;
-    --marrom-card: #3a2316;
-    --creme: #F7EEDB;
-    --cinza: #CBBFA8;
-    --verde: #4E8A3E;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: "Trebuchet MS", Arial, sans-serif;
-    color: var(--cinza);
-    background: radial-gradient(1200px 600px at 70% -10%, rgba(242,183,5,.12), transparent 60%),
-                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.65;
-  }
-  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; color: var(--creme); font-weight: 700; letter-spacing: .01em; }
-  h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; }
-
-  .gold {
-    background: linear-gradient(135deg, #FFF1B8 0%, var(--ouro) 45%, var(--ouro-escuro) 100%);
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
-
-  /* ===== HERO ===== */
-  header.hero {
-    position: relative;
-    text-align: center;
-    padding: 56px 20px 40px;
-    overflow: hidden;
-  }
-  header.hero::before {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(500px 280px at 50% 0%, rgba(242,183,5,.18), transparent 70%);
-    pointer-events: none;
-  }
-  .hero-img {
-    position: relative;
-    width: min(720px, 92%);
-    border-radius: 22px;
-    box-shadow: 0 30px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(242,183,5,.25);
-    transition: transform .6s cubic-bezier(.22,1,.36,1);
-  }
-  .hero-img:hover { transform: scale(1.02); }
-  .hero-titulo {
-    position: relative;
-    margin-top: 28px;
-    font-size: clamp(26px, 4vw, 40px);
-  }
-  .hero-sub {
-    position: relative;
-    margin-top: 8px;
-    font-size: 14px;
-    letter-spacing: .25em;
-    text-transform: uppercase;
-    color: var(--ouro);
-  }
-
-  /* ===== NAV ===== */
-  nav {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(13,8,5,.82);
-    backdrop-filter: blur(14px);
-    border-top: 1px solid rgba(242,183,5,.15);
-    border-bottom: 1px solid rgba(242,183,5,.25);
-    text-align: center;
-  }
-  nav a {
-    display: inline-block;
-    color: var(--cinza);
-    text-decoration: none;
-    padding: 14px 16px;
-    font-size: 13px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    transition: color .3s ease, background .3s ease;
-  }
-  nav a:hover { color: var(--ouro); background: rgba(242,183,5,.06); }
-
-  /* ===== SEÇÕES ===== */
-  section { max-width: 980px; margin: 0 auto; padding: 72px 22px; }
-  .eyebrow {
-    display: inline-block;
-    font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--ouro); margin-bottom: 14px;
-  }
-  .lead { font-size: 17px; max-width: 760px; margin-top: 14px; }
-
-  .divisor {
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    max-width: 980px; margin: 0 auto;
-    color: var(--ouro);
-  }
-  .divisor::before, .divisor::after {
-    content: ""; flex: 1; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
-  }
-  .divisor span { font-size: 16px; text-shadow: 0 0 12px rgba(242,183,5,.6); }
-
-  .card {
-    position: relative;
-    background: linear-gradient(145deg, rgba(58,35,22,.7), rgba(26,17,10,.9));
-    border: 1px solid rgba(242,183,5,.18);
-    border-radius: 20px;
-    padding: 30px 26px;
-    box-shadow: 0 18px 44px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,241,184,.06);
-    transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .4s ease, box-shadow .4s ease;
-  }
-  .card:hover {
-    transform: translateY(-6px) scale(1.02);
-    border-color: rgba(242,183,5,.5);
-    box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 40px rgba(242,183,5,.12);
-  }
-
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; margin-top: 32px; }
-
-  /* Propósito / tema */
-  .verso {
-    margin-top: 28px;
-    padding: 30px 26px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, var(--marrom), #4f2e1a);
-    border: 1px solid rgba(242,183,5,.35);
-    text-align: center;
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 19px;
-    color: var(--creme);
-    box-shadow: 0 20px 50px rgba(0,0,0,.45);
-  }
-  .verso strong { display: block; margin-top: 12px; font-style: normal; color: var(--ouro); letter-spacing: .12em; text-transform: uppercase; font-size: 13px; }
-  .card h3 { font-size: 22px; margin-bottom: 8px; }
-
-  /* Confra Kids */
-  .evento {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 32px;
-  }
-  .data-badge {
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #FFF1B8, var(--ouro));
-    color: #2b1a0e;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .hora { font-family: Georgia, serif; font-size: 34px; color: var(--creme); }
-  .preletora { text-align: center; }
-  .avatar {
-    width: 84px; height: 84px; border-radius: 50%;
-    margin: 0 auto 14px;
-    background: linear-gradient(135deg, var(--ouro), var(--marrom));
-    display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, serif; font-size: 30px; color: #2b1a0e; font-weight: 700;
-    box-shadow: 0 10px 24px rgba(0,0,0,.4);
-  }
-
-  /* Equipe */
-  .equipe-lista { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .equipe-lista li {
-    padding: 12px 22px;
-    border-radius: 999px;
-    border: 1px solid rgba(242,183,5,.3);
-    background: rgba(242,183,5,.05);
-    color: var(--creme);
-    transition: transform .4s ease, background .3s ease;
-  }
-  .equipe-lista li:hover { transform: scale(1.08); background: rgba(242,183,5,.14); }
-
-  /* ===== DESAFIO DA GIRAFINHA ===== */
-  #desafio { max-width: none; background: radial-gradient(900px 500px at 50% 0%, rgba(242,183,5,.10), transparent 70%); }
-  #desafio .wrap { max-width: 980px; margin: 0 auto; }
-  .intro-desafio {
-    margin-top: 26px;
-    background: linear-gradient(145deg, rgba(58,35,22,.6), rgba(26,17,10,.8));
-    border: 1px solid rgba(242,183,5,.2);
-    border-radius: 20px;
-    padding: 26px;
-  }
-  .intro-desafio p + p { margin-top: 10px; }
-  .intro-desafio strong { color: var(--ouro-claro); }
-
-  .envelopes {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    max-width: 780px;
-    margin: 40px auto 0;
-    perspective: 900px;
-  }
-  .envelope {
-    position: relative;
-    height: 104px;
-    border: 1px solid rgba(255,217,102,.35);
-    border-radius: 12px;
-    background:
-      linear-gradient(160deg, rgba(255,255,255,.08) 0%, transparent 45%),
-      linear-gradient(180deg, #6b4228 0%, #3e2415 100%);
-    box-shadow: 0 12px 26px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,241,184,.15);
-    cursor: pointer;
-    font-family: Georgia, serif;
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--ouro-claro);
-    text-shadow: 0 2px 6px rgba(0,0,0,.5);
-    overflow: hidden;
-    transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease, border-color .3s ease;
-  }
-  .envelope::before {
-    content: ""; position: absolute; inset: 0;
-    background:
-      linear-gradient(to bottom right, transparent 49.5%, rgba(0,0,0,.25) 50%, transparent 50.5%),
-      linear-gradient(to bottom left, transparent 49.5%, rgba(0,0,0,.25) 50%, transparent 50.5%);
-    pointer-events: none;
-  }
-  .envelope::after {
-    content: ""; position: absolute; top: -40%; left: -60%;
-    width: 40%; height: 180%;
-    background: linear-gradient(120deg, transparent, rgba(255,241,184,.25), transparent);
-    transform: rotate(20deg);
-    transition: left .8s ease;
-    pointer-events: none;
-  }
-  .envelope .num { position: relative; z-index: 1; display: block; padding-top: 12px; }
-  .envelope:hover, .envelope:focus-visible {
-    transform: scale(1.12) translateY(-4px);
-    border-color: var(--ouro);
-    box-shadow: 0 24px 46px rgba(0,0,0,.65), 0 0 32px rgba(242,183,5,.35);
-    z-index: 2;
-    outline: none;
-  }
-  .envelope:hover::after { left: 130%; }
-  .envelope.aberto {
-    background: linear-gradient(180deg, #8FC77A 0%, var(--verde) 100%);
-    border-color: rgba(255,255,255,.4);
-  }
-  .envelope.aberto .num { color: #fff; }
-  .envelope .check {
-    position: absolute; bottom: 6px; right: 10px; z-index: 1;
-    font-size: 14px; color: #fff; opacity: 0;
-    transition: opacity .3s ease;
-  }
-  .envelope.aberto .check { opacity: 1; }
-
-  .aviso-desafio { text-align: center; margin-top: 22px; font-size: 13px; color: var(--cinza); opacity: .8; }
-
-  /* Reveal ao rolar */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1); }
-  .reveal.visivel { opacity: 1; transform: none; }
-
-  /* ===== MODAL ===== */
-  .modal {
-    position: fixed; inset: 0; z-index: 100;
-    background: rgba(8,4,2,.75);
-    backdrop-filter: blur(10px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 18px;
-    opacity: 0; pointer-events: none;
-    transition: opacity .4s ease;
-  }
-  .modal.ativo { opacity: 1; pointer-events: all; }
-  .modal-box {
-    position: relative;
-    width: 100%; max-width: 420px;
-    padding: 36px 28px;
-    text-align: center;
-    border-radius: 24px;
-    background: linear-gradient(160deg, #3a2316 0%, #1a110a 100%);
-    border: 1px solid rgba(242,183,5,.4);
-    box-shadow: 0 40px 90px rgba(0,0,0,.7), 0 0 60px rgba(242,183,5,.12);
-    transform: translateY(30px) scale(.95);
-    transition: transform .5s cubic-bezier(.22,1,.36,1);
-  }
-  .modal.ativo .modal-box { transform: none; }
-  .fechar {
-    position: absolute; top: 12px; right: 14px;
-    background: none; border: none;
-    font-size: 26px; color: var(--cinza); cursor: pointer;
-    transition: color .3s ease, transform .3s ease;
-  }
-  .fechar:hover { color: var(--ouro); transform: rotate(90deg); }
-  .modal-box h3 { font-size: 24px; margin-bottom: 6px; }
-  .modal-box .rotulo { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); }
-  .valor {
-    font-family: Georgia, serif;
-    font-size: 46px; font-weight: 700;
-    margin: 14px 0 22px;
-  }
-  .pix-box {
-    background: rgba(255,255,255,.04);
-    border: 1px dashed rgba(242,183,5,.5);
-    border-radius: 16px;
-    padding: 18px;
-    text-align: left;
-    font-size: 14px;
-  }
-  .pix-box p + p { margin-top: 8px; }
-  .pix-label { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--ouro); }
-  .pix-chave {
-    display: block; margin-top: 6px;
-    font-size: 20px; font-weight: 700; color: var(--creme);
-    background: rgba(0,0,0,.35);
-    padding: 10px 14px; border-radius: 10px;
-    letter-spacing: .04em;
-    word-break: break-all;
-  }
-  .btn {
-    margin-top: 18px;
-    padding: 14px 30px;
-    border: none; border-radius: 999px;
-    background: linear-gradient(135deg, #FFF1B8, var(--ouro) 50%, var(--ouro-escuro));
-    color: #2b1a0e; font-weight: 700; font-size: 15px;
-    font-family: inherit; cursor: pointer;
-    box-shadow: 0 10px 26px rgba(242,183,5,.3);
-    transition: transform .3s ease, box-shadow .3s ease;
-  }
-  .btn:hover { transform: scale(1.05); box-shadow: 0 16px 36px rgba(242,183,5,.45); }
-  .msg-copia { font-size: 13px; color: #9ED08A; min-height: 20px; margin-top: 8px; }
-  .obs { font-size: 13px; color: var(--cinza); margin-top: 12px; font-style: italic; }
-
-  /* ===== RODAPÉ ===== */
-  footer {
-    text-align: center;
-    padding: 56px 20px 40px;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,.4));
-    border-top: 1px solid rgba(242,183,5,.15);
-    color: var(--cinza);
-    font-size: 14px;
-  }
-  footer strong { color: var(--creme); font-family: Georgia, serif; font-size: 17px; }
-  footer a { color: var(--ouro); text-decoration: none; transition: color .3s ease; }
-  footer a:hover { color: var(--ouro-claro); }
-
-  @media (max-width: 560px) {
-    .envelopes { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .envelope { height: 88px; font-size: 24px; }
-    section { padding: 56px 18px; }
-  }
+  body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: #f4f6f9; color: #1f2937; }
+  header { background: #1e3a5f; color: #ffffff; padding: 24px 32px; }
+  header h1 { margin: 0 0 6px 0; font-size: 24px; }
+  header p { margin: 2px 0; font-size: 14px; }
+  main { padding: 24px 32px; max-width: 1200px; margin: auto; }
+  section { background: #ffffff; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  h2 { font-size: 18px; color: #1e3a5f; margin-top: 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
+  h3 { font-size: 15px; color: #1e3a5f; margin: 20px 0 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  th { background: #f1f5f9; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #ffffff; }
+  .critico { background: #b91c1c; }
+  .alto { background: #d97706; }
+  .medio { background: #2563eb; }
+  .ok { background: #15803d; }
+  .countdown { font-size: 28px; font-weight: bold; color: #b91c1c; }
+  .alerta { border-left: 5px solid #b91c1c; background: #fef2f2; padding: 12px 16px; margin-bottom: 12px; border-radius: 4px; }
+  .nota { font-size: 13px; color: #4b5563; }
+  footer { text-align: center; font-size: 12px; color: #6b7280; padding: 16px; }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <img class="hero-img" src="https://d31zra5bs5df64.cloudfront.net/prod/3EtvEreVI4OPxAYj46FaVMaEHii/chat/3LNDNro3SQUPutwzFJAZAw3sraW/3LNECcXdxnnfdjwmimZLpKcoUVu.png?Expires=1793289598&Key-Pair-Id=K2FT0I8VPJSP5H&Signature=WpyevYCqdM~H1zOq9LPmt8J8MSGdfnj3xCUnTAcvjIBX4~ql8e22-sTYRVh39ql679Ah9oC8Ns5jmcU~~M8-0Jy8I1zlCzFcC7L1~WFKClzfZyUEvPifbY5LlCXcqExZrgE4BTe~sNYIIlCrCzMBPDCQ7Lf2vSSTspDJfJvgh6huD~iisWoMPWQmPKVXmviG7zz1~nXVCqB6suY3lGcZUTSFfBpXUq71BZ6B6QOGMnBiK7upn6-UzSEIZP3XHIJuBkuOlXieofLOExtm2t14Kp2oXmmVhbjI4DClBs~LKONy15oa4yRSLdgWxEnZaJaF2eNjdXXpgibKXxrRfzg-2A__" alt="Confra Kids: Crescendo com Cristo, 21 e 22/11/2026">
-  <div class="hero-titulo gold">Joias de Cristo</div>
-  <div class="hero-sub">Departamento Infantil · IEADC Moradias Coqueiros 2</div>
+<header>
+  <h1>Panorama do Sistema de Gestão da Segurança da Informação (SGSI)</h1>
+  <p><strong>Soow Sigma · Área de GRC · Curitiba-PR</strong></p>
+  <p>Versão: v11 · Data de referência: 16/10/2026 · Classificação: Uso restrito</p>
+  <p>Responsável: Fernando Miranda, Líder de GRC</p>
 </header>
 
-<nav>
-  <a href="#proposito">Propósito</a>
-  <a href="#tema">Tema</a>
-  <a href="#confra">Confra Kids</a>
-  <a href="#equipe">Equipe</a>
-  <a href="#desafio">Desafio</a>
-  <a href="#contato">Contato</a>
-</nav>
+<main>
 
-<section id="proposito" class="reveal">
-  <span class="eyebrow">Nosso propósito</span>
-  <h2>Apresentar <span class="gold">Jesus</span> às crianças</h2>
-  <p class="lead">O departamento infantil da Moradias Coqueiros 2 existe para apresentar Jesus às crianças de forma amorosa, criativa e segura, ajudando cada uma a conhecer a Palavra de Deus e a desenvolver uma fé pessoal e firme.</p>
-  <p class="lead">Acreditamos que a criança é parte viva da igreja. Cada encontro, cada história bíblica e cada atividade buscam formar caráter cristão, respeito, amizade e amor pelas coisas de Deus desde cedo.</p>
+<section>
+  <h2>1. Prioridades imediatas</h2>
+  <div class="alerta"><strong>NCM-07 (credencial administrativa do SQL Server/ERP).</strong> Auditoria pede tratamento como incidente de execução imediata. Confirmar se a senha foi rotacionada e se o compartilhamento de scripts foi revisado. O log com a credencial foi transmitido ao auditor e a terceiros. <span class="tag critico">Confirmar hoje</span></div>
+  <div class="alerta"><strong>Análise crítica pela Direção de 2026 vencida.</strong> O prazo anual do POP-SIG-017 expirou em 30/09/2026. O relatório considerou o prazo vigente em 18/09. Risco de reabertura da NCM-06 e agravamento da NCm-08. <span class="tag critico">Vencida</span></div>
+  <div class="alerta"><strong>Status da certificação contraditório.</strong> O relatório descreve o "primeiro ciclo de certificação" e cita contrato com o organismo certificador em análise. Premissa de certificação já obtida não se sustenta nos documentos. <span class="tag critico">Esclarecer com a Direção</span></div>
+  <div class="alerta"><strong>NCM-09 (identidade e perímetro da organização).</strong> Quatro CNPJs, duas razões sociais, uso de "SigmaTelecom" na DoA e unidade em Porto Alegre fora do escopo. Pode interromper a certificação na análise de contrato. <span class="tag critico">Crítica</span></div>
 </section>
 
-<div class="divisor"><span>◆</span></div>
-
-<section id="tema" class="reveal">
-  <span class="eyebrow">Tema anual</span>
-  <h2>Crescendo com <span class="gold">Cristo</span></h2>
-  <div class="verso">
-    "E crescia Jesus em sabedoria, e em estatura, e em graça para com Deus e os homens."
-    <strong>Lucas 2:52</strong>
-  </div>
-  <p class="lead">Ao longo do ano, as crianças são convidadas a crescer como Jesus cresceu: em sabedoria, em estatura e em graça. Cada etapa reforça que o crescimento verdadeiro acontece quando nos aproximamos de Cristo.</p>
-  <div class="grid-3">
-    <div class="card"><h3>Sabedoria</h3><p>Aprender a Palavra e tomar decisões segundo a vontade de Deus.</p></div>
-    <div class="card"><h3>Estatura</h3><p>Crescer em responsabilidade, maturidade e compromisso.</p></div>
-    <div class="card"><h3>Graça</h3><p>Viver o amor de Deus e demonstrá-lo ao próximo.</p></div>
-  </div>
+<section>
+  <h2>2. Governança e papéis</h2>
+  <table>
+    <tr><th>Papel</th><th>Responsável</th><th>Observação</th></tr>
+    <tr><td>Líder de GRC (até a auditoria)</td><td>Fernando Miranda</td><td>Coordena o programa e reporta à Direção de Serviços</td></tr>
+    <tr><td>Líder de GRC (pós auditoria)</td><td>Fernando Miranda</td><td>Responsabilidade contínua pelo SGSI após 24/11/2026</td></tr>
+    <tr><td>Analista de GRC</td><td>Amanda Couto</td><td>Elaboradora da maioria dos documentos analisados. Confirmar envio de itens não localizados</td></tr>
+    <tr><td>Aprovação da Lista Mestra</td><td>Tiago Ceresoli</td><td>Confirmado como aprovador na PLT-SIG-001 R12, POP-SIG-005 R04 e DoA Rev00</td></tr>
+    <tr><td>Revisão da Lista Mestra</td><td><em>A definir</em></td><td>Izidio Rosa deixou o circuito</td></tr>
+    <tr><td>Donos técnicos de políticas</td><td><em>A definir</em></td><td>Itens que estavam com Izidio Rosa precisam de novo dono</td></tr>
+    <tr><td>Encarregada de Dados (DPO)</td><td>Melissa Gobbo</td><td>Nomeação com efeitos desde 01/09/2026, qualificando a controladora como SOOW SIGMA SERVIÇOS DE TECNOLOGIA LTDA. Suplente não identificado</td></tr>
+    <tr><td>Autor da PLT-SIG-001 R12</td><td>Enzo Stival</td><td>Autor da revisão de 13/07/2026. Não aparece nos blocos de aprovação</td></tr>
+    <tr><td>Revisor técnico do relatório de auditoria interna</td><td>Pablo Albernaz (Exata Consultoria)</td><td>Identificado no relatório. Correspondência com o "Pablo" da Lista Mestra é hipótese a confirmar</td></tr>
+    <tr><td>Auditor líder da auditoria interna</td><td>Marco Antonio Rockenbach (Exata)</td><td>Determinação de 28/09/2026 sobre o domínio de pessoas</td></tr>
+  </table>
 </section>
 
-<div class="divisor"><span>◆</span></div>
-
-<section id="confra" class="reveal">
-  <span class="eyebrow">Confra Kids</span>
-  <h2>Um encontro para <span class="gold">crescer</span></h2>
-  <div class="evento">
-    <div class="card">
-      <span class="data-badge">Sábado · 21/11/2026</span>
-      <div class="hora">19h30</div>
-      <p style="margin-top:10px;">Preletora: <strong style="color:var(--creme);">Tia Gilda</strong></p>
-    </div>
-    <div class="card">
-      <span class="data-badge">Domingo · 22/11/2026</span>
-      <div class="hora">19h00</div>
-      <p style="margin-top:10px;">Preletora: <strong style="color:var(--creme);">Tia Eneleia</strong></p>
-    </div>
-  </div>
+<section>
+  <h2>3. Marcos e contagem regressiva</h2>
+  <p>Dias corridos até a auditoria externa (23/11/2026): <span class="countdown">38</span></p>
+  <table>
+    <tr><th>Marco</th><th>Data</th><th>Situação</th></tr>
+    <tr><td>Confirmação do status da certificação e tipo de auditoria</td><td>21/10/2026</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Decisão sobre NCM-07 e registro de tratamento como incidente</td><td>Imediato</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Lista Mestra corrigida e aprovada</td><td>21/10/2026</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Decisões submetidas ao auditor líder (A.6.1, conscientização, A.8.31/A.8.33, G.17)</td><td>Antes da reunião de fechamento</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Plano de regularização do REG00201 e tratamento das NCs</td><td>30/10/2026</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Análise crítica pela Direção de 2026 (proposta, prazo já vencido)</td><td>05/11/2026</td><td><span class="tag critico">Vencida</span></td></tr>
+    <tr><td>Ata da análise crítica assinada (proposta)</td><td>09/11/2026</td><td><span class="tag alto">Alto</span></td></tr>
+    <tr><td>Reunião de fechamento da auditoria interna Exata (data não informada)</td><td>A confirmar</td><td><span class="tag alto">Alto</span></td></tr>
+    <tr><td>Auditoria interna de preparação concluída</td><td>13/11/2026</td><td><span class="tag alto">Alto</span></td></tr>
+    <tr><td>Simulação de entrevistas</td><td>17/11/2026</td><td><span class="tag medio">Médio</span></td></tr>
+    <tr><td>Congelamento de evidências</td><td>19/11/2026</td><td><span class="tag alto">Alto</span></td></tr>
+    <tr><td>Auditoria externa (2 dias)</td><td>23 e 24/11/2026</td><td><span class="tag medio">Agendada</span></td></tr>
+  </table>
 </section>
 
-<div class="divisor"><span>◆</span></div>
+<section>
+  <h2>4. Situação por área</h2>
+  <table>
+    <tr><th>Área</th><th>Situação</th><th>Status</th></tr>
+    <tr><td>Certificação ISO/IEC 27001</td><td>Certificado não localizado. Relatório fala em primeiro ciclo de certificação e contrato com organismo em análise. Tipo de auditoria de 23 e 24/11 não informado</td><td><span class="tag critico">Não confirmado</span></td></tr>
+    <tr><td>Escopo do SGSI (REG0103 R02)</td><td>Rev.02 remete à DoA e declara instalação única em Curitiba. Porto Alegre não está no escopo. Número de pessoas inconsistente (179 posições, 180 citado, 68 na campanha)</td><td><span class="tag critico">Divergente</span></td></tr>
+    <tr><td>Identidade da organização</td><td>Quatro CNPJs e duas razões sociais em documentos vigentes. "SigmaTelecom" na DoA. Assinaturas em @sigmatelecom.com.br</td><td><span class="tag critico">NCM-09</span></td></tr>
+    <tr><td>Manual do SGSI (MS, R00)</td><td>Elaborado em 03/11/2025. Template não removido na seção 1. Sem revisor na assinatura. Não declara escopo, política, objetivos nem papéis</td><td><span class="tag critico">Reconstrução</span></td></tr>
+    <tr><td>Lista Mestra (REG0401)</td><td>Datas inválidas, versões divergentes, duplicidade de PLT-SIG-001 e aprovador "Pablo" não identificado</td><td><span class="tag critico">Correção necessária</span></td></tr>
+    <tr><td>Declaração de Aplicabilidade (REG-00-203 Rev00)</td><td>Cabeçalho com 100% implementado. Quatro controles "alterados em auditoria" sem revisão. Percentual de 87,10% sem memória. Atributo "SigmaTelecom". Auditoria confirmou estrutura e revisou as dez exclusões (A.8.4 e A.8.25 a A.8.34, exceto A.8.32), que estão encerradas</td><td><span class="tag critico">Correção necessária</span></td></tr>
+    <tr><td>Política de Segurança (PLT-SIG-001)</td><td>Interna: R12 de 13/07/2026. Capa mostra R11. Pública: Rev.05, reproduz o texto de escopo do REG0103. Mesmo código com revisões diferentes</td><td><span class="tag critico">Correção necessária</span></td></tr>
+    <tr><td>Plano de Continuidade (POP-SIG-006 R05)</td><td>Datas contraditórias (2025 e 2026). Três regras de recuperação. Sem BIA. Testes sem registro. Revisor e aprovador iguais. Nobreak com chamado encerrado sem troca (NCm-26)</td><td><span class="tag critico">Correção necessária</span></td></tr>
+    <tr><td>Controle de Identidade e Acesso (POP-SIG-005 R04)</td><td>Dono é cargo. Controles descritos (PAM, SASE, localização) sem evidência. Idade mínima de senha em zero dia (NCm-36). Credenciais genéricas e físicas sem RH (NCm-29)</td><td><span class="tag critico">Crítico</span></td></tr>
+    <tr><td>Matriz ISO x Evidências (dashboard v2)</td><td>Diverge da DoA e dos registros em vários requisitos. Contagens de NC não batem entre abas. Reconciliar com a Rev.15</td><td><span class="tag critico">Não apresentável</span></td></tr>
+    <tr><td>Análise crítica 2025</td><td>Reunião em 30/09/2025 (ata REG-017-01). Painel anterior dizia 25/09. Data de assinatura da ata a conferir</td><td><span class="tag alto">Parcial</span></td></tr>
+    <tr><td>Análise crítica 2026</td><td>Não realizada. Prazo anual venceu em 30/09/2026</td><td><span class="tag critico">Vencida</span></td></tr>
+    <tr><td>Objetivos de SI (REG0105 R03)</td><td>Revisão de 14 a 18/09/2026 com cinco objetivos, metas, indicadores, responsáveis e prazos. NCm-03 encerrada</td><td><span class="tag ok">Atualizado</span></td></tr>
+    <tr><td>Não conformidades (Rev.15)</td><td>4 maiores (NCM-04, NCM-07, NCM-08, NCM-09) e 26 menores. Substitui a contagem de 18 do painel anterior</td><td><span class="tag critico">Pendente</span></td></tr>
+    <tr><td>Riscos (REG00201)</td><td>29 itens vencidos e nenhum concluído. RISK-SI-116 (dados reais em teste) sem residual. Riscos marcados como mitigados no Starter Kit sem evidência</td><td><span class="tag critico">Pendente</span></td></tr>
+    <tr><td>Indicadores (POP-SIG-017 R02)</td><td>Metas para cinco indicadores. Três sem meta. Quatro remissões incorretas no próprio documento. Campos de ação em branco no REG0601</td><td><span class="tag alto">Em verificação</span></td></tr>
+    <tr><td>Mudanças</td><td>Registro operando. Três mudanças paradas há 13, 11 e meses (NCm-34), incluindo migração de RH sem aprovação</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Monitoramento e SOC</td><td>Série de nove meses. Eventos positivos crescentes (49, 163 e 298). Sem critério de escalonamento (NCM-35). Resolução crítica de ~14 h para ~50 h</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Proteção de endpoint</td><td>Comunicação de 54,9%, 45,7% e 49,6% contra meta de 50% (NCm-33)</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Backup</td><td>Sem criptografia e retenção de 10 dias contra 30 da política (NCM-08). Teste de restauração executado em 02/06/2026 (9,099 GB)</td><td><span class="tag critico">Não conforme</span></td></tr>
+    <tr><td>Ambientes de teste e desenvolvimento</td><td>SIGMAFONE_TESTE com porte equivalente à produção. Setor de desenvolvimento autodeclarado em relatório interno. Decisão pendente sobre A.8.31 e A.8.33</td><td><span class="tag critico">Decisão pendente</span></td></tr>
+    <tr><td>Privacidade (inventários de dados)</td><td>Inventário vazio, retenção indeterminada, sem base legal e sem contrato com terceiros (NCm-30). Visitantes escriturados desde fev/2025 (952 registros)</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Treinamento e conscientização</td><td>Campanha com 68 pessoas contra 179 posições. Conscientização passou a conforme com ficha de indicador exemplar. Periodicidade divergente entre documentos</td><td><span class="tag alto">Parcial</span></td></tr>
+    <tr><td>Triagem de antecedentes (A.6.1)</td><td>Organização declara que não realiza. Checklists existem, sem registro do processo. Submetido ao auditor líder</td><td><span class="tag critico">Decisão pendente</span></td></tr>
+    <tr><td>Fornecedores</td><td>Avaliação anual formal e NCm-31 (avaliação não aderente à política). Contratos de fornecedores críticos (E.13) não localizados</td><td><span class="tag alto">Pendente</span></td></tr>
+  </table>
+</section>
 
-<section id="equipe" class="reveal">
-  <span class="eyebrow">Equipe de líderes</span>
-  <h2>Quem <span class="gold">cuida</span> da nossa garotada</h2>
-  <ul class="equipe-lista">
-    <li>Chris Miranda</li>
-    <li>Meire Silvestre</li>
-    <li>Amanda Ferreira</li>
+<section>
+  <h2>5. Achados prioritários</h2>
+  <table>
+    <tr><th>#</th><th>Achado</th><th>Impacto na auditoria</th><th>Prioridade</th></tr>
+    <tr><td>1</td><td>NCM-07: credencial SA exposta em script e log, transmitida como evidência</td><td>Tratamento imediato exigido. Afeta o requisito de controle de acesso e a credibilidade do programa</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>2</td><td>NCM-09: identidade e perímetro da organização</td><td>Pode interromper o processo de certificação</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>3</td><td>Status da certificação e tipo de auditoria não confirmados</td><td>Define o escopo do risco e o enquadramento do reporte à Direção</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>4</td><td>Análise crítica 2026 vencida</td><td>Requisito 9.3 sem evidência no ciclo atual</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>5</td><td>NCM-04: controle de versões com quatro ocorrências objetivas</td><td>Única NC maior com método de correção já validado pelo auditor</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>6</td><td>NCM-08: backup sem criptografia e retenção de 10 dias</td><td>Descumprimento da própria política, com evidência de execução</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>7</td><td>Declarações de controles que a operação não sustenta (MFA, PAM, revisão de acessos, triagem, "100% implementado")</td><td>Afirmação falsa em documento controlado é agravante na auditoria</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>8</td><td>29 riscos vencidos no REG00201</td><td>Requisito 6.1.3 sem tratamento evidenciado</td><td><span class="tag critico">Crítica</span></td></tr>
+    <tr><td>9</td><td>Continuidade com três regras de RTO, sem BIA e com chamado de nobreak encerrado sem execução</td><td>Pergunta provável em auditoria</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>10</td><td>Ambiente de teste com dados de porte produtivo e setor de desenvolvimento autodeclarado</td><td>Mudança na SoA e no escopo, conforme a decisão tomada</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>11</td><td>Controle de identidade: senha de idade mínima em zero dia, credenciais genéricas e credenciais físicas sem RH</td><td>Parâmetro implantado contra norma interna, com evidência técnica</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>12</td><td>Documentos com código duplicado, versões paralelas e remissões erradas</td><td>Controle documental é o tema mais fácil de auditar e o que mais compromete credibilidade</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>13</td><td>Política pública (Rev.05) e interna (Rev.12) com mesmo código</td><td>Auditor vai comparar as duas versões</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>14</td><td>Inventários de dados pessoais sem base legal e sem contrato com terceiros</td><td>Tema de privacidade alinhado ao POP-SIG-005 e à PLT-SIG-001</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>15</td><td>Mudança de plataforma de RH sem aprovação, com dados pessoais migrados</td><td>Mudança sem controle e possível tratamento de dados sem avaliação</td><td><span class="tag alto">Alta</span></td></tr>
+    <tr><td>16</td><td>Dois domínios de e-mail e dois endereços de reporte de incidente</td><td>Canal de reporte precisa ser único e testado</td><td><span class="tag medio">Média</span></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>6. Decisões submetidas ao auditor líder</h2>
+  <table>
+    <tr><th>Tema</th><th>Opções declaradas</th><th>Ponto de atenção</th></tr>
+    <tr><td>A.6.1 Triagem de antecedentes</td><td>Manter conforme, ou abrir NCm por ausência de triagem e de registro do processo de admissão</td><td>Declaração formal da própria organização. Checklists existem, mas não são registro</td></tr>
+    <tr><td>A.6.3 e 7.3 Conscientização</td><td>Manter com registro da verificação, ou exigir conciliação entre efetivo do SGSI e campanha</td><td>68 pessoas contra 179 posições. Residentes (17) e SOC (25) podem estar em cliente, o que afeta escopo</td></tr>
+    <tr><td>A.8.31 e A.8.33 Ambiente de teste</td><td>(i) Manter exclusão com justificativa ampliada; (ii) restabelecer e avaliar; (iii) confirmar ausência de dados de produção</td><td>Porte equivalente sugere cópia da produção. Opção (iii) é a mais difícil de sustentar</td></tr>
+    <tr><td>Plataforma G.17</td><td>Confirmar origem: desenvolvimento próprio, contratação ou solução de terceiros</td><td>Não consta no inventário. Possível relação com Starter Kit ou com a área de GRC, a confirmar</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>7. Pontos de correção apontados pelo auditor</h2>
+  <p class="nota">Itens de tratamento que o auditor pede para resolver sem aguardar a reunião de fechamento ou que são erros documentais. Sem responsável ou prazo nesta versão, conforme decisão de Fernando.</p>
+  <table>
+    <tr><th>Item</th><th>Tratamento apontado</th><th>Status</th></tr>
+    <tr><td>NCM-07</td><td>Tratar como incidente imediato, rotacionar senha, revisar compartilhamento, avaliar período de exposição</td><td><span class="tag critico">Não confirmado</span></td></tr>
+    <tr><td>NCM-07 (cofre)</td><td>Estender a rotação automática já existente para contas administrativas do ERP</td><td><span class="tag critico">Não confirmado</span></td></tr>
+    <tr><td>NCM-07 (cópia do log)</td><td>Definir tratamento da cópia do log com credencial enviada ao auditor, conforme TLP:AMBER</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>NCM-04</td><td>Replicar o método do sétimo lote: identificar registro, reemitir, aprovar com assinatura verificável, registrar revisão superada</td><td><span class="tag critico">Pendente</span></td></tr>
+    <tr><td>POP-SIG-020</td><td>Resolver código duplicado com POP-SIG-013 e confirmar qual procedimento de incidente vale</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>REG0601</td><td>Consolidar três arquivos Rev.01 com conteúdos diferentes e preencher campos de ação e apontamento</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>POP-SIG-017 R02</td><td>Corrigir quatro remissões incorretas</td><td><span class="tag medio">Pendente</span></td></tr>
+    <tr><td>REG0101</td><td>Registrar revisão 02 na aba de controle de alterações e tratar a via obsoleta</td><td><span class="tag medio">Pendente</span></td></tr>
+    <tr><td>PLT-SIG-001</td><td>Alinhar código, revisão e conteúdo entre versão pública (Rev.05) e interna (Rev.12)</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Chamado do nobreak</td><td>Reabrir registro e executar ou formalizar a troca das baterias</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Mudanças paradas</td><td>Decidir sobre as três mudanças pendentes, inclusive a plataforma de RH</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Política de senha</td><td>Alinhar idade mínima implantada (zero) com a política (cinco dias)</td><td><span class="tag alto">Pendente</span></td></tr>
+    <tr><td>Documentos não localizados</td><td>Confirmar envio de inventário de ativos (E.01), dois contratos de fornecedores críticos (E.13), matriz de responsabilidade em nuvem (E.16) e transcrições e vídeos</td><td><span class="tag alto">Pendente</span></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>8. Análise dos documentos de controle</h2>
+
+  <h3>8.1 Declaração de Aplicabilidade (REG00203 Rev00, 01/10/2025)</h3>
+  <table>
+    <tr><th>Tipo</th><th>Achado</th><th>Controles</th></tr>
+    <tr><td>Declaração</td><td>Cabeçalho com 100% implementado em contradição com análise crítica 2026 vencida e NCs abertas</td><td>Cabeçalho</td></tr>
+    <tr><td>Versão</td><td>Quatro controles "alterados em auditoria" na mesma Rev00. Sem código, revisão, data e evidência de aprovação na aba de apresentação</td><td>A5.20, A5.22, A5.35, A8.06</td></tr>
+    <tr><td>Nota pendente</td><td>Nota de edição não resolvida e referência a POP inexistente</td><td>A8.06</td></tr>
+    <tr><td>Aplicabilidade</td><td>A8.04 não aplicável por falta de desenvolvimento, mas com status "Não Implementado" e justificativa que descreve práticas. Reavaliar à luz do ambiente de teste e do setor de desenvolvimento</td><td>A8.04, A8.31, A8.33</td></tr>
+    <tr><td>Evidência</td><td>Ata de análise crítica usada como evidência de análise independente (A5.35). Lista Mestra usada como evidência de conformidade (A5.36 e A5.37)</td><td>A5.06, A5.35, A5.36, A5.37</td></tr>
+    <tr><td>Afirmação</td><td>MFA "obrigatória" para sistemas críticos, sem respaldo no POP-SIG-005 ("quando possível")</td><td>A8.05</td></tr>
+    <tr><td>Referência</td><td>Referências cruzadas inconsistentes entre DoA, matriz e POPs</td><td>A5.05, A5.23, A6.03, A8.09</td></tr>
+    <tr><td>Responsável</td><td>Donos genéricos: Melhoria Contínua, Engenharia, Compras, Coordenação de Marketing, Logística e TI</td><td>Vários</td></tr>
+    <tr><td>Percentual</td><td>87,10% sem fórmula. Auditoria aponta que o percentual foi apurado sobre base incorreta</td><td>Cabeçalho</td></tr>
+  </table>
+
+  <h3>8.2 Matriz ISO x Evidências (dashboard v2)</h3>
+  <table>
+    <tr><th>Item</th><th>Matriz diz</th><th>Outro documento diz</th></tr>
+    <tr><td>5.2 Política</td><td>Atendido/Forte, Rev.11</td><td>Interna R12. Pública Rev.05</td></tr>
+    <tr><td>6.1.2 e 6.1.3 Riscos</td><td>Atendido/Forte</td><td>29 riscos vencidos. Sem ato de constituição do comitê na matriz</td></tr>
+    <tr><td>7.5 Informação documentada</td><td>Atendido/Forte; "impressão proibida"</td><td>PLT-SIG-001 seção 9 permite impressão de documentos pessoais</td></tr>
+    <tr><td>A.5.18 Direitos de acesso</td><td>Revisões trimestrais</td><td>Objetivo 6.2 cita anual. NCm-23 reancorada aqui</td></tr>
+    <tr><td>A.5.30 Continuidade</td><td>NC menor: sem RTO/RPO formal</td><td>POP-SIG-006 R05 tem tabela, com valores contraditórios</td></tr>
+    <tr><td>9.2 Auditoria interna</td><td>16 NCs tratadas via GLPI</td><td>Painel e Rev.15 mostram NCs abertas</td></tr>
+    <tr><td>9.3 Análise crítica</td><td>Atendido/Forte; "duas análises anuais"</td><td>2026 vencida em 30/09/2026</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>9. Políticas, procedimentos e demais documentos</h2>
+
+  <h3>9.1 PLT-SIG-001 Política de Segurança (interna R12 e pública Rev.05)</h3>
+  <table>
+    <tr><th>Tipo</th><th>Achado</th></tr>
+    <tr><td>Versão</td><td>Capa com R11 e histórico com R12 (13/07/2026). Autor Enzo Stival fora dos blocos de aprovação. Izidio consta como revisor</td></tr>
+    <tr><td>Publicação</td><td>Versão pública é Rev.05 e reproduz o texto de escopo do REG0103. Versão interna contém detalhes técnicos de senha, rede e monitoramento</td></tr>
+    <tr><td>Privacidade</td><td>Monitoramento de conversas (seções 15 e 22) sem análise de base legal e transparência</td></tr>
+    <tr><td>Impressão</td><td>Seção 9 permite impressão de documentos pessoais. Matriz 7.5 registra proibição</td></tr>
+    <tr><td>Treinamento</td><td>Reciclagem semestral (seção 5), anual (REG-04-02) e "periodicamente" (DoA A6.03)</td></tr>
+    <tr><td>Incidentes</td><td>Seção 18 remete a política não recebida. Dois endereços de reporte</td></tr>
+    <tr><td>Desligamento</td><td>Comunicação "antecipada", sem prazo. Sem transferência de titularidade de contas e pastas</td></tr>
+    <tr><td>Sanções</td><td>Seção 24 cita artigos da CLT. Validação jurídica pendente</td></tr>
+    <tr><td>Senhas</td><td>Cinco de seis parâmetros coincidem com a implantação. Idade mínima implantada em zero, contra cinco dias da política (NCm-36)</td></tr>
+  </table>
+
+  <h3>9.2 Manual do SGSI (MS, R00, 03/11/2025)</h3>
+  <table>
+    <tr><th>Tipo</th><th>Achado</th></tr>
+    <tr><td>Função</td><td>Seção 1 mantém instruções de template. Não cumpre papel de guia</td></tr>
+    <tr><td>Conteúdo</td><td>Não declara escopo, política, objetivos, papéis, comitê nem autoridade de aprovação</td></tr>
+    <tr><td>Processos</td><td>Cerca de 24 processos sem código de POP correspondente</td></tr>
+    <tr><td>Aprovação</td><td>Seção 2 diz que a Direção aprova. Assinatura de Izidio, sem revisor. Lista Mestra registra Tiago Ceresoli</td></tr>
+    <tr><td>Identidade</td><td>Razão social e CNPJ da SOOW SIGMA LTDA (78.766.151/0001-42), um dos quatro CNPJs em conflito</td></tr>
+  </table>
+
+  <h3>9.3 POP-SIG-006 Plano de Continuidade (R05)</h3>
+  <table>
+    <tr><th>Tipo</th><th>Achado</th></tr>
+    <tr><td>Datas</td><td>Capa com 10/09/2025 e controle de alterações com 10/09/2026</td></tr>
+    <tr><td>Tempo de recuperação</td><td>Seção 5: RTO de 2 a 4 horas. Caso C: 24 horas para servidores críticos. Caso B: DRP só acima de 24 horas</td></tr>
+    <tr><td>Criticidade</td><td>Baseada em benchmark, sem BIA. REG-05-02 de 2021</td></tr>
+    <tr><td>Testes</td><td>Revalidação anual descrita. Ata de simulado não localizada</td></tr>
+    <tr><td>Seguro</td><td>Caso G depende de seguro. REG0403 registra vencimento em 11/09/2025</td></tr>
+    <tr><td>Notificação</td><td>Caso J fala em 72 horas para a ANPD. Confirmar prazo na fonte oficial antes de uso</td></tr>
+    <tr><td>Dados pessoais</td><td>Celulares pessoais de colaboradores e prestador na seção de contatos</td></tr>
+    <tr><td>Aprovação</td><td>Izidio como revisor e aprovador ao mesmo tempo</td></tr>
+  </table>
+
+  <h3>9.4 POP-SIG-005 Controle de Identidade e Acesso (R04)</h3>
+  <table>
+    <tr><th>Tipo</th><th>Achado</th></tr>
+    <tr><td>Dono</td><td>Cargo, sem titular nominal após a saída de Izidio</td></tr>
+    <tr><td>Controles descritos</td><td>PAM, SASE, localização, Qualys, FortiEDR e criptografia de disco sem evidência</td></tr>
+    <tr><td>Linguagem vaga</td><td>MFA "quando possível". Revisões "periódicas" sem frequência</td></tr>
+    <tr><td>Senhas</td><td>Regra das últimas três senhas duplicada com redações diferentes</td></tr>
+    <tr><td>Desligamento</td><td>Sem prazo e sem etapa para contas administrativas</td></tr>
+    <tr><td>Domínio</td><td>suporte.ti@soow.com.br, enquanto assinaturas usam sigmatelecom.com.br</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>10. Divergências cruzadas</h2>
+  <table>
+    <tr><th>Tema</th><th>Documento A</th><th>Documento B</th><th>Divergência</th></tr>
+    <tr><td>Escopo</td><td>REG0103 R02 (Curitiba)</td><td>Relatório: Porto Alegre em contrato-modelo (E.12)</td><td>Unidade fora do escopo declarado</td></tr>
+    <tr><td>Identidade</td><td>DPO (0001-73)</td><td>Contrato e Manual (78.766.151/0001-42)</td><td>Quatro CNPJs e duas razões sociais</td></tr>
+    <tr><td>Política</td><td>Pública (Rev.05)</td><td>Interna (R12), mesmo código</td><td>Versões paralelas</td></tr>
+    <tr><td>MFA</td><td>DoA A8.05 (obrigatória)</td><td>POP-SIG-005 (quando possível)</td><td>Controle declarado além do procedimento</td></tr>
+    <tr><td>Senha</td><td>PLT-SIG-001 (5 dias)</td><td>Implantação (zero)</td><td>Parâmetro divergente (NCm-36)</td></tr>
+    <tr><td>Triagem</td><td>DoA e matriz (conforme)</td><td>Declaração da organização (não realiza)</td><td>Afirmação contraditória</td></tr>
+    <tr><td>Análise crítica</td><td>Matriz 9.3 (duas análises anuais)</td><td>2026 vencida</td><td>Requisito sem evidência</td></tr>
+    <tr><td>Desenvolvimento</td><td>DoA (não realiza)</td><td>Relatório de mesa limpa (setor de desenvolvimento) e SIGMAFONE_TESTE</td><td>Exclusão contestada</td></tr>
+    <tr><td>Continuidade</td><td>Matriz A.5.30 (Rev.03)</td><td>POP-SIG-006 R05</td><td>Matriz desatualizada</td></tr>
+    <tr><td>Revisão de acessos</td><td>Matriz A.5.18 (trimestral)</td><td>Objetivo 6.2 (anual)</td><td>Periodicidade indefinida</td></tr>
+    <tr><td>Impressão</td><td>Matriz 7.5 (proibida)</td><td>PLT-SIG-001 seção 9 (permitida)</td><td>Política contradiz a matriz</td></tr>
+    <tr><td>Reporte de incidente</td><td>PLT-SIG-001 e DoA A6.08</td><td>DoA A5.26</td><td>Dois endereços e dois domínios</td></tr>
+    <tr><td>Procedimento de incidente</td><td>POP-SIG-013</td><td>POP-SIG-020 (novo, 22/09/2026)</td><td>Relatório cita POP-SIG-013 e código POP-SIG-020 está duplicado</td></tr>
+    <tr><td>Aprovação</td><td>Manual (Direção)</td><td>Lista Mestra e POP-SIG-005 (Tiago Ceresoli)</td><td>Autoridade indefinida</td></tr>
+    <tr><td>Seguro</td><td>POP-SIG-006 Caso G</td><td>REG0403 (vencimento 11/09/2025)</td><td>Apólice possivelmente vencida</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>11. Premissas e pontos não confirmados</h2>
+  <ul>
+    <li>Status da certificação: o relatório indica primeiro ciclo. O painel tratará como não confirmado até a Direção validar.</li>
+    <li>Tipo de auditoria de 23 e 24/11 (certificação, recertificação ou vigilância) e certificadora não informados.</li>
+    <li>Pessoas no escopo: 179 posições, 180 citado e 68 na campanha. Conciliação pendente.</li>
+    <li>Identidade do "Pablo" da Lista Mestra: hipótese de correspondência com Pablo Albernaz.</li>
+    <li>Data de assinatura da ata de análise crítica de 2025.</li>
+    <li>Relação entre plataforma G.17 e Starter Kit ou área de GRC.</li>
+    <li>Status da rotação da credencial SA (NCM-07).</li>
+    <li>Prazo de notificação à ANPD e artigos da CLT: confirmar na fonte oficial.</li>
+    <li>Conteúdo do capítulo sobre fornecedores (NCm-31 em diante) ainda não avaliado.</li>
   </ul>
 </section>
 
-<div class="divisor"><span>◆</span></div>
+<section>
+  <h2>12. Documentos pendentes</h2>
 
-<section id="desafio">
-  <div class="wrap reveal">
-    <span class="eyebrow">Campanha especial</span>
-    <h2>Desafio da <span class="gold">Girafinha</span></h2>
-    <div class="intro-desafio">
-      <p>Você foi escolhido(a) para participar desta dinâmica especial! Clique em um dos envelopes abaixo para ver o valor sugerido e os dados para contribuir via PIX.</p>
-      <p><strong>Fique à vontade para ofertar o valor que puder.</strong> Cada oferta é uma semente plantada para o crescimento das nossas crianças e para a realização do Confra Kids.</p>
-    </div>
-    <div class="envelopes" id="envelopes"></div>
-    <p class="aviso-desafio">Os envelopes já abertos aparecem marcados com ✓ nesta visita.</p>
-  </div>
+  <h3>Lote atual (já solicitados ou em envio)</h3>
+  <table>
+    <tr><th>Documento</th><th>Motivo</th></tr>
+    <tr><td>Fornecedores (POP-SIG-007 e contratos de fornecedores críticos)</td><td>NCm-31, avaliação não aderente, e E.13 não localizado</td></tr>
+    <tr><td>Privacidade (PLT-SIG-005 e inventários de dados pessoais)</td><td>NCm-30, base legal e DPA com terceiros</td></tr>
+    <tr><td>Gestão de mudanças (POP-SIG-018 e registros)</td><td>NCm-34 e migração de RH</td></tr>
+    <tr><td>Vulnerabilidades (POP-SIG-010 e resultados de pentest)</td><td>Pentest de 12/08/2025 e tratamento das vulnerabilidades</td></tr>
+  </table>
+
+  <h3>Pendências anteriores</h3>
+  <table>
+    <tr><th>Documento</th><th>Motivo</th></tr>
+    <tr><td>PLT-SIG-001 versão pública (Rev.05)</td><td>Comparação com a interna R12</td></tr>
+    <tr><td>REG00201 e Starter Kit exportado</td><td>Validar 29 riscos vencidos e mitigações</td></tr>
+    <tr><td>POP-SIG-002 (gestão de riscos)</td><td>Critérios e aceitação</td></tr>
+    <tr><td>POP-SIG-003 (organização da SI e CGSIP)</td><td>Composição e papéis da DoA A5.02</td></tr>
+    <tr><td>POP-SIG-013 e POP-SIG-020</td><td>Procedimento vigente de incidente</td></tr>
+    <tr><td>REG-017-01 (ata de 2025)</td><td>Confirmar data de assinatura</td></tr>
+    <tr><td>REG-05-02 (sistemas críticos)</td><td>Base de criticidade do POP-SIG-006</td></tr>
+    <tr><td>REG-015-01 e relatório de auditoria interna de 2025</td><td>Status das NCs de 2025</td></tr>
+    <tr><td>POP-SIG-008, POP-SIG-009 e PG-03</td><td>Pessoas, infraestrutura física e ativos</td></tr>
+  </table>
+
+  <h3>Evidências que não são documentos</h3>
+  <p>Evidência de rotação da credencial SA. Apólice de seguro vigente. Registro de simulado de continuidade. Registro de revisão de acessos. Contrato com organismo certificador. Plano ou status da auditoria de certificação. Itens não localizados: inventário de ativos (E.01), dois contratos de fornecedores críticos (E.13), matriz de responsabilidade em nuvem (E.16), transcrições e vídeos.</p>
 </section>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-  <div class="modal-box">
-    <button class="fechar" id="fechar" aria-label="Fechar">&times;</button>
-    <div class="rotulo">Envelope</div>
-    <h3 id="modal-titulo">01</h3>
-    <p>Valor sugerido</p>
-    <div class="valor gold" id="modal-valor">R$ 0,00</div>
-    <div class="pix-box">
-      <p class="pix-label">Contribua via PIX</p>
-      <p>Chave PIX (celular)</p>
-      <span class="pix-chave" id="pix-chave"></span>
-      <p><strong>Favorecido:</strong> <span id="pix-titular"></span></p>
-      <p><strong>Cidade:</strong> <span id="pix-cidade"></span></p>
-    </div>
-    <button class="btn" id="copiar">Copiar chave PIX</button>
-    <div class="msg-copia" id="msg-copia"></div>
-    <p class="obs">Deus abençoe a sua oferta!</p>
-  </div>
-</div>
+<section>
+  <h2>13. Mudanças em relação à v10</h2>
+  <ul>
+    <li>Incluída a análise do relatório de auditoria interna Rev.15 (EXATA/AI-27001/2026-01), com pontos de correção e decisões submetidas ao auditor.</li>
+    <li>Prioridades imediatas: NCM-07, análise crítica 2026 vencida, status da certificação e NCM-09.</li>
+    <li>Corrigidas: versão pública da PLT-SIG-001 (Rev.05), data da análise crítica de 2025, status do REG0103, contagem de NCs e objetivos de SI.</li>
+    <li>Pablo Albernaz identificado como revisor técnico da auditoria interna, com hipótese de correspondência a confirmar.</li>
+    <li>Incluídos gargalos de identidade, ambiente de teste, monitoramento, mudanças, privacidade e triagem.</li>
+    <li>Contagem regressiva mantida em 38 dias.</li>
+    <li>Plano de ação mantido fora do painel, conforme decisão de Fernando.</li>
+  </ul>
+</section>
 
-<footer id="contato">
-  <p><strong>IEADC Moradias Coqueiros 2</strong></p>
-  <p>Rua Cidade de Ituporanga, 238 · Sítio Cercado, Curitiba, Paraná</p>
-  <p style="margin-top:8px;">Instagram: <a href="https://www.instagram.com/uiadccoqueiros2?exln=MW84Z2E3NzVtanRxcQ==" target="_blank" rel="noopener">@uiadccoqueiros2</a></p>
-  <p style="margin-top:14px; font-size:12px; opacity:.7;">Joias de Cristo · Crescendo com Cristo</p>
-</footer>
-
-<script>
-  // ====== CONFIGURAÇÃO ======
-  const CONFIG = {
-    pixChave: "41995922272",
-    pixTitular: "IEADC Moradias Coqueiros 2",
-    pixCidade: "Curitiba"
-  };
-
-  // 17 envelopes com valores alternados entre R$ 5,00 e R$ 100,00
-  const TOTAL = 17;
-  const VALORES = Array.from({ length: TOTAL }, (_, i) => (i % 2 === 0 ? 5 : 100));
-
-  // ====== LÓGICA ======
-  const grid = document.getElementById("envelopes");
-  const modal = document.getElementById("modal");
-  const abertos = new Set();
-
-  const formatarValor = v => "R$ " + Number(v).toFixed(2).replace(".", ",");
-  const pad = n => String(n).padStart(2, "0");
-
-  for (let i = 1; i <= TOTAL; i++) {
-    const btn = document.createElement("button");
-    btn.className = "envelope";
-    btn.setAttribute("aria-label", "Envelope " + pad(i));
-    btn.innerHTML = '<span class="num">' + pad(i) + '</span><span class="check">✓</span>';
-    btn.addEventListener("click", () => abrir(i));
-    grid.appendChild(btn);
-  }
-
-  function abrir(i) {
-    document.getElementById("modal-titulo").textContent = pad(i);
-    document.getElementById("modal-valor").textContent = formatarValor(VALORES[i - 1]);
-    document.getElementById("pix-chave").textContent = CONFIG.pixChave;
-    document.getElementById("pix-titular").textContent = CONFIG.pixTitular;
-    document.getElementById("pix-cidade").textContent = CONFIG.pixCidade;
-    document.getElementById("msg-copia").textContent = "";
-    modal.classList.add("ativo");
-    abertos.add(i);
-    grid.children[i - 1].classList.add("aberto");
-    document.getElementById("fechar").focus();
-  }
-
-  function fechar() { modal.classList.remove("ativo"); }
-
-  document.getElementById("fechar").addEventListener("click", fechar);
-  modal.addEventListener("click", e => { if (e.target === modal) fechar(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape") fechar(); });
-
-  document.getElementById("copiar").addEventListener("click", async () => {
-    const msg = document.getElementById("msg-copia");
-    try {
-      await navigator.clipboard.writeText(CONFIG.pixChave);
-      msg.textContent = "Chave copiada com sucesso!";
-    } catch (err) {
-      msg.textContent = "Não foi possível copiar. Selecione a chave e copie manualmente.";
-    }
-  });
-
-  // Revelar seções ao rolar
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visivel"); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-</script>
-
-</body>
-</html>
+<section>
+  <h2>14. Controle de versão</h2>
+  <table>
+    <tr><th>Versão</th><th>Data</th><th>Responsável</th><th>Alteração</th></tr>
+    <tr><td>v08</td><td>15/10/2026</td><td>Fernando Miranda</td><td>REG0401 indicado como indisponível</td></tr>
+    <tr><td>v09</td><td>15/10/2026</td><td>Fernando Miranda</td><td>Lista Mestra analisada, governança atualizada, marcos para a auditoria</td></tr>
+    <tr><td>v10</td><td>16/10/2026</td><td>Fernando Miranda</td><td>Análise de DoA, matriz, PLT-SIG-001, Manual, POP-SIG-005 e POP-SIG-006</td></tr>
+    <tr><td>v11</td><td>16/10/2026
