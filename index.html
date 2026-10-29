@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><script src="https://myhub.ia.br/canvas-vendor/tailwind.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joias de Cristo | Desafio da Girafinha | IEADC Moradias Coqueiros 2</title>
+<style>
+  :root {
+    --bg-1: #1a110a;
+    --bg-2: #0d0805;
+    --ouro: #F2B705;
+    --ouro-claro: #FFD966;
+    --ouro-escuro: #B8860B;
+    --marrom: #7a4a2b;
+    --marrom-card: #3a2316;
+    --creme: #F7EEDB;
+    --cinza: #CBBFA8;
+    --verde: #4E8A3E;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: var(--cinza);
+    background: radial-gradient(1200px 600px at 70% -10%, rgba(242,183,5,.12), transparent 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.65;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; color: var(--creme); font-weight: 700; letter-spacing: .01em; }
+  h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; }
+
+  .gold {
+    background: linear-gradient(135deg, #FFF1B8 0%, var(--ouro) 45%, var(--ouro-escuro) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ===== HERO ===== */
+  header.hero {
+    position: relative;
+    text-align: center;
+    padding: 56px 20px 40px;
+    overflow: hidden;
+  }
+  header.hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(500px 280px at 50% 0%, rgba(242,183,5,.18), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-img {
+    position: relative;
+    width: min(720px, 92%);
+    border-radius: 22px;
+    box-shadow: 0 30px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(242,183,5,.25);
+    transition: transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .hero-img:hover { transform: scale(1.02); }
+  .hero-titulo {
+    position: relative;
+    margin-top: 28px;
+    font-size: clamp(26px, 4vw, 40px);
+  }
+  .hero-sub {
+    position: relative;
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--ouro);
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(13,8,5,.82);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(242,183,5,.15);
+    border-bottom: 1px solid rgba(242,183,5,.25);
+    text-align: center;
+  }
+  nav a {
+    display: inline-block;
+    color: var(--cinza);
+    text-decoration: none;
+    padding: 14px 16px;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transition: color .3s ease, background .3s ease;
+  }
+  nav a:hover { color: var(--ouro); background: rgba(242,183,5,.06); }
+
+  /* ===== SEÇÕES ===== */
+  section { max-width: 980px; margin: 0 auto; padding: 72px 22px; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ouro); margin-bottom: 14px;
+  }
+  .lead { font-size: 17px; max-width: 760px; margin-top: 14px; }
+
+  .divisor {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    max-width: 980px; margin: 0 auto;
+    color: var(--ouro);
+  }
+  .divisor::before, .divisor::after {
+    content: ""; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+  }
+  .divisor span { font-size: 16px; text-shadow: 0 0 12px rgba(242,183,5,.6); }
+
+  .card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(58,35,22,.7), rgba(26,17,10,.9));
+    border: 1px solid rgba(242,183,5,.18);
+    border-radius: 20px;
+    padding: 30px 26px;
+    box-shadow: 0 18px 44px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,241,184,.06);
+    transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .4s ease, box-shadow .4s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(242,183,5,.5);
+    box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 40px rgba(242,183,5,.12);
+  }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; margin-top: 32px; }
+
+  /* Propósito / tema */
+  .verso {
+    margin-top: 28px;
+    padding: 30px 26px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--marrom), #4f2e1a);
+    border: 1px solid rgba(242,183,5,.35);
+    text-align: center;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--creme);
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .verso strong { display: block; margin-top: 12px; font-style: normal; color: var(--ouro); letter-spacing: .12em; text-transform: uppercase; font-size: 13px; }
+  .card h3 { font-size: 22px; margin-bottom: 8px; }
+
+  /* Confra Kids */
+  .evento {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 32px;
+  }
+  .data-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #FFF1B8, var(--ouro));
+    color: #2b1a0e;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hora { font-family: Georgia, serif; font-size: 34px; color: var(--creme); }
+  .preletora { text-align: center; }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 50%;
+    margin: 0 auto 14px;
+    background: linear-gradient(135deg, var(--ouro), var(--marrom));
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-size: 30px; color: #2b1a0e; font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0,0,0,.4);
+  }
+
+  /* Equipe */
+  .equipe-lista { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .equipe-lista li {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(242,183,5,.3);
+    background: rgba(242,183,5,.05);
+    color: var(--creme);
+    transition: transform .4s ease, background .3s ease;
+  }
+  .equipe-lista li:hover { transform: scale(1.08); background: rgba(242,183,5,.14); }
+
+  /* ===== DESAFIO DA GIRAFINHA ===== */
+  #desafio { max-width: none; background: radial-gradient(900px 500px at 50% 0%, rgba(242,183,5,.10), transparent 70%); }
+  #desafio .wrap { max-width: 980px; margin: 0 auto; }
+  .intro-desafio {
+    margin-top: 26px;
+    background: linear-gradient(145deg, rgba(58,35,22,.6), rgba(26,17,10,.8));
+    border: 1px solid rgba(242,183,5,.2);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .intro-desafio p + p { margin-top: 10px; }
+  .intro-desafio strong { color: var(--ouro-claro); }
+
+  .envelopes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    max-width: 780px;
+    margin: 40px auto 0;
+    perspective: 900px;
+  }
+  .envelope {
+    position: relative;
+    height: 104px;
+    border: 1px solid rgba(255,217,102,.35);
+    border-radius: 12px;
+    background:
+      linear-gradient(160deg, rgba(255,255,255,.08) 0%, transparent 45%),
+      linear-gradient(180deg, #6b4228 0%, #3e2415 100%);
+    box-shadow: 0 12px 26px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,241,184,.15);
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ouro-claro);
+    text-shadow: 0 2px 6px rgba(0,0,0,.5);
+    overflow: hidden;
+    transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease, border-color .3s ease;
+  }
+  .envelope::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom right, transparent 49.5%, rgba(0,0,0,.25) 50%, transparent 50.5%),
+      linear-gradient(to bottom left, transparent 49.5%, rgba(0,0,0,.25) 50%, transparent 50.5%);
+    pointer-events: none;
+  }
+  .envelope::after {
+    content: ""; position: absolute; top: -40%; left: -60%;
+    width: 40%; height: 180%;
+    background: linear-gradient(120deg, transparent, rgba(255,241,184,.25), transparent);
+    transform: rotate(20deg);
+    transition: left .8s ease;
+    pointer-events: none;
+  }
+  .envelope .num { position: relative; z-index: 1; display: block; padding-top: 12px; }
+  .envelope:hover, .envelope:focus-visible {
+    transform: scale(1.12) translateY(-4px);
+    border-color: var(--ouro);
+    box-shadow: 0 24px 46px rgba(0,0,0,.65), 0 0 32px rgba(242,183,5,.35);
+    z-index: 2;
+    outline: none;
+  }
+  .envelope:hover::after { left: 130%; }
+  .envelope.aberto {
+    background: linear-gradient(180deg, #8FC77A 0%, var(--verde) 100%);
+    border-color: rgba(255,255,255,.4);
+  }
+  .envelope.aberto .num { color: #fff; }
+  .envelope .check {
+    position: absolute; bottom: 6px; right: 10px; z-index: 1;
+    font-size: 14px; color: #fff; opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .envelope.aberto .check { opacity: 1; }
+
+  .aviso-desafio { text-align: center; margin-top: 22px; font-size: 13px; color: var(--cinza); opacity: .8; }
+
+  /* Reveal ao rolar */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1); }
+  .reveal.visivel { opacity: 1; transform: none; }
+
+  /* ===== MODAL ===== */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(8,4,2,.75);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s ease;
+  }
+  .modal.ativo { opacity: 1; pointer-events: all; }
+  .modal-box {
+    position: relative;
+    width: 100%; max-width: 420px;
+    padding: 36px 28px;
+    text-align: center;
+    border-radius: 24px;
+    background: linear-gradient(160deg, #3a2316 0%, #1a110a 100%);
+    border: 1px solid rgba(242,183,5,.4);
+    box-shadow: 0 40px 90px rgba(0,0,0,.7), 0 0 60px rgba(242,183,5,.12);
+    transform: translateY(30px) scale(.95);
+    transition: transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .modal.ativo .modal-box { transform: none; }
+  .fechar {
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: none;
+    font-size: 26px; color: var(--cinza); cursor: pointer;
+    transition: color .3s ease, transform .3s ease;
+  }
+  .fechar:hover { color: var(--ouro); transform: rotate(90deg); }
+  .modal-box h3 { font-size: 24px; margin-bottom: 6px; }
+  .modal-box .rotulo { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); }
+  .valor {
+    font-family: Georgia, serif;
+    font-size: 46px; font-weight: 700;
+    margin: 14px 0 22px;
+  }
+  .pix-box {
+    background: rgba(255,255,255,.04);
+    border: 1px dashed rgba(242,183,5,.5);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: left;
+    font-size: 14px;
+  }
+  .pix-box p + p { margin-top: 8px; }
+  .pix-label { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--ouro); }
+  .pix-chave {
+    display: block; margin-top: 6px;
+    font-size: 20px; font-weight: 700; color: var(--creme);
+    background: rgba(0,0,0,.35);
+    padding: 10px 14px; border-radius: 10px;
+    letter-spacing: .04em;
+    word-break: break-all;
+  }
+  .btn {
+    margin-top: 18px;
+    padding: 14px 30px;
+    border: none; border-radius: 999px;
+    background: linear-gradient(135deg, #FFF1B8, var(--ouro) 50%, var(--ouro-escuro));
+    color: #2b1a0e; font-weight: 700; font-size: 15px;
+    font-family: inherit; cursor: pointer;
+    box-shadow: 0 10px 26px rgba(242,183,5,.3);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .btn:hover { transform: scale(1.05); box-shadow: 0 16px 36px rgba(242,183,5,.45); }
+  .msg-copia { font-size: 13px; color: #9ED08A; min-height: 20px; margin-top: 8px; }
+  .obs { font-size: 13px; color: var(--cinza); margin-top: 12px; font-style: italic; }
+
+  /* ===== RODAPÉ ===== */
+  footer {
+    text-align: center;
+    padding: 56px 20px 40px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.4));
+    border-top: 1px solid rgba(242,183,5,.15);
+    color: var(--cinza);
+    font-size: 14px;
+  }
+  footer strong { color: var(--creme); font-family: Georgia, serif; font-size: 17px; }
+  footer a { color: var(--ouro); text-decoration: none; transition: color .3s ease; }
+  footer a:hover { color: var(--ouro-claro); }
+
+  @media (max-width: 560px) {
+    .envelopes { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .envelope { height: 88px; font-size: 24px; }
+    section { padding: 56px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="hero-img" src="https://d31zra5bs5df64.cloudfront.net/prod/3EtvEreVI4OPxAYj46FaVMaEHii/chat/3LNDNro3SQUPutwzFJAZAw3sraW/3LNECcXdxnnfdjwmimZLpKcoUVu.png?Expires=1793289598&Key-Pair-Id=K2FT0I8VPJSP5H&Signature=WpyevYCqdM~H1zOq9LPmt8J8MSGdfnj3xCUnTAcvjIBX4~ql8e22-sTYRVh39ql679Ah9oC8Ns5jmcU~~M8-0Jy8I1zlCzFcC7L1~WFKClzfZyUEvPifbY5LlCXcqExZrgE4BTe~sNYIIlCrCzMBPDCQ7Lf2vSSTspDJfJvgh6huD~iisWoMPWQmPKVXmviG7zz1~nXVCqB6suY3lGcZUTSFfBpXUq71BZ6B6QOGMnBiK7upn6-UzSEIZP3XHIJuBkuOlXieofLOExtm2t14Kp2oXmmVhbjI4DClBs~LKONy15oa4yRSLdgWxEnZaJaF2eNjdXXpgibKXxrRfzg-2A__" alt="Confra Kids: Crescendo com Cristo, 21 e 22/11/2026">
+  <div class="hero-titulo gold">Joias de Cristo</div>
+  <div class="hero-sub">Departamento Infantil · IEADC Moradias Coqueiros 2</div>
+</header>
+
+<nav>
+  <a href="#proposito">Propósito</a>
+  <a href="#tema">Tema</a>
+  <a href="#confra">Confra Kids</a>
+  <a href="#equipe">Equipe</a>
+  <a href="#desafio">Desafio</a>
+  <a href="#contato">Contato</a>
+</nav>
+
+<section id="proposito" class="reveal">
+  <span class="eyebrow">Nosso propósito</span>
+  <h2>Apresentar <span class="gold">Jesus</span> às crianças</h2>
+  <p class="lead">O departamento infantil da Moradias Coqueiros 2 existe para apresentar Jesus às crianças de forma amorosa, criativa e segura, ajudando cada uma a conhecer a Palavra de Deus e a desenvolver uma fé pessoal e firme.</p>
+  <p class="lead">Acreditamos que a criança é parte viva da igreja. Cada encontro, cada história bíblica e cada atividade buscam formar caráter cristão, respeito, amizade e amor pelas coisas de Deus desde cedo.</p>
+</section>
+
+<div class="divisor"><span>◆</span></div>
+
+<section id="tema" class="reveal">
+  <span class="eyebrow">Tema anual</span>
+  <h2>Crescendo com <span class="gold">Cristo</span></h2>
+  <div class="verso">
+    "E crescia Jesus em sabedoria, e em estatura, e em graça para com Deus e os homens."
+    <strong>Lucas 2:52</strong>
+  </div>
+  <p class="lead">Ao longo do ano, as crianças são convidadas a crescer como Jesus cresceu: em sabedoria, em estatura e em graça. Cada etapa reforça que o crescimento verdadeiro acontece quando nos aproximamos de Cristo.</p>
+  <div class="grid-3">
+    <div class="card"><h3>Sabedoria</h3><p>Aprender a Palavra e tomar decisões segundo a vontade de Deus.</p></div>
+    <div class="card"><h3>Estatura</h3><p>Crescer em responsabilidade, maturidade e compromisso.</p></div>
+    <div class="card"><h3>Graça</h3><p>Viver o amor de Deus e demonstrá-lo ao próximo.</p></div>
+  </div>
+</section>
+
+<div class="divisor"><span>◆</span></div>
+
+<section id="confra" class="reveal">
+  <span class="eyebrow">Confra Kids</span>
+  <h2>Um encontro para <span class="gold">crescer</span></h2>
+  <div class="evento">
+    <div class="card">
+      <span class="data-badge">Sábado · 21/11/2026</span>
+      <div class="hora">19h30</div>
+      <p style="margin-top:10px;">Preletora: <strong style="color:var(--creme);">Tia Gilda</strong></p>
+    </div>
+    <div class="card">
+      <span class="data-badge">Domingo · 22/11/2026</span>
+      <div class="hora">19h00</div>
+      <p style="margin-top:10px;">Preletora: <strong style="color:var(--creme);">Tia Eneleia</strong></p>
+    </div>
+  </div>
+</section>
+
+<div class="divisor"><span>◆</span></div>
+
+<section id="equipe" class="reveal">
+  <span class="eyebrow">Equipe de líderes</span>
+  <h2>Quem <span class="gold">cuida</span> da nossa garotada</h2>
+  <ul class="equipe-lista">
+    <li>Chris Miranda</li>
+    <li>Meire Silvestre</li>
+    <li>Amanda Ferreira</li>
+  </ul>
+</section>
+
+<div class="divisor"><span>◆</span></div>
+
+<section id="desafio">
+  <div class="wrap reveal">
+    <span class="eyebrow">Campanha especial</span>
+    <h2>Desafio da <span class="gold">Girafinha</span></h2>
+    <div class="intro-desafio">
+      <p>Você foi escolhido(a) para participar desta dinâmica especial! Clique em um dos envelopes abaixo para ver o valor sugerido e os dados para contribuir via PIX.</p>
+      <p><strong>Fique à vontade para ofertar o valor que puder.</strong> Cada oferta é uma semente plantada para o crescimento das nossas crianças e para a realização do Confra Kids.</p>
+    </div>
+    <div class="envelopes" id="envelopes"></div>
+    <p class="aviso-desafio">Os envelopes já abertos aparecem marcados com ✓ nesta visita.</p>
+  </div>
+</section>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+  <div class="modal-box">
+    <button class="fechar" id="fechar" aria-label="Fechar">&times;</button>
+    <div class="rotulo">Envelope</div>
+    <h3 id="modal-titulo">01</h3>
+    <p>Valor sugerido</p>
+    <div class="valor gold" id="modal-valor">R$ 0,00</div>
+    <div class="pix-box">
+      <p class="pix-label">Contribua via PIX</p>
+      <p>Chave PIX (celular)</p>
+      <span class="pix-chave" id="pix-chave"></span>
+      <p><strong>Favorecido:</strong> <span id="pix-titular"></span></p>
+      <p><strong>Cidade:</strong> <span id="pix-cidade"></span></p>
+    </div>
+    <button class="btn" id="copiar">Copiar chave PIX</button>
+    <div class="msg-copia" id="msg-copia"></div>
+    <p class="obs">Deus abençoe a sua oferta!</p>
+  </div>
+</div>
+
+<footer id="contato">
+  <p><strong>IEADC Moradias Coqueiros 2</strong></p>
+  <p>Rua Cidade de Ituporanga, 238 · Sítio Cercado, Curitiba, Paraná</p>
+  <p style="margin-top:8px;">Instagram: <a href="https://www.instagram.com/uiadccoqueiros2?exln=MW84Z2E3NzVtanRxcQ==" target="_blank" rel="noopener">@uiadccoqueiros2</a></p>
+  <p style="margin-top:14px; font-size:12px; opacity:.7;">Joias de Cristo · Crescendo com Cristo</p>
+</footer>
+
+<script>
+  // ====== CONFIGURAÇÃO ======
+  const CONFIG = {
+    pixChave: "41995922272",
+    pixTitular: "IEADC Moradias Coqueiros 2",
+    pixCidade: "Curitiba"
+  };
+
+  // 17 envelopes com valores alternados entre R$ 5,00 e R$ 100,00
+  const TOTAL = 17;
+  const VALORES = Array.from({ length: TOTAL }, (_, i) => (i % 2 === 0 ? 5 : 100));
+
+  // ====== LÓGICA ======
+  const grid = document.getElementById("envelopes");
+  const modal = document.getElementById("modal");
+  const abertos = new Set();
+
+  const formatarValor = v => "R$ " + Number(v).toFixed(2).replace(".", ",");
+  const pad = n => String(n).padStart(2, "0");
+
+  for (let i = 1; i <= TOTAL; i++) {
+    const btn = document.createElement("button");
+    btn.className = "envelope";
+    btn.setAttribute("aria-label", "Envelope " + pad(i));
+    btn.innerHTML = '<span class="num">' + pad(i) + '</span><span class="check">✓</span>';
+    btn.addEventListener("click", () => abrir(i));
+    grid.appendChild(btn);
+  }
+
+  function abrir(i) {
+    document.getElementById("modal-titulo").textContent = pad(i);
+    document.getElementById("modal-valor").textContent = formatarValor(VALORES[i - 1]);
+    document.getElementById("pix-chave").textContent = CONFIG.pixChave;
+    document.getElementById("pix-titular").textContent = CONFIG.pixTitular;
+    document.getElementById("pix-cidade").textContent = CONFIG.pixCidade;
+    document.getElementById("msg-copia").textContent = "";
+    modal.classList.add("ativo");
+    abertos.add(i);
+    grid.children[i - 1].classList.add("aberto");
+    document.getElementById("fechar").focus();
+  }
+
+  function fechar() { modal.classList.remove("ativo"); }
+
+  document.getElementById("fechar").addEventListener("click", fechar);
+  modal.addEventListener("click", e => { if (e.target === modal) fechar(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") fechar(); });
+
+  document.getElementById("copiar").addEventListener("click", async () => {
+    const msg = document.getElementById("msg-copia");
+    try {
+      await navigator.clipboard.writeText(CONFIG.pixChave);
+      msg.textContent = "Chave copiada com sucesso!";
+    } catch (err) {
+      msg.textContent = "Não foi possível copiar. Selecione a chave e copie manualmente.";
+    }
+  });
+
+  // Revelar seções ao rolar
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visivel"); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
